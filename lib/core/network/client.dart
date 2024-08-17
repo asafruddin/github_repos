@@ -11,7 +11,7 @@ class NetworkClient {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.github+json',
-        'Authorization': 'Bearer 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'
+        'Authorization': 'Bearer token'
       },
     );
 
