@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:trending_list/core/injector/injector.dart';
 import 'package:trending_list/presentation/bloc/trendings_repository/trendings_repository_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trending_list/presentation/pages/no_connection/no_connection_page.dart';
+import 'package:trending_list/presentation/pages/error_page/error_page.dart';
+import 'package:trending_list/presentation/pages/error_page/no_connection_page.dart';
 import 'package:trending_list/presentation/pages/trendings/components/repos_tile.dart';
 
 class TrendingsPage extends StatelessWidget {
@@ -17,13 +20,29 @@ class TrendingsPage extends StatelessWidget {
       child: BlocListener<TrendingsRepositoryBloc, TrendingsRepositoryState>(
         listener: (context, state) {
           if (state.dioErrorType != null) {
+            if (state.dioErrorType! == DioExceptionType.badResponse) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ErrorPage(message: state.errorMessage),
+                ),
+              ).then((value) {
+                context
+                    .read<TrendingsRepositoryBloc>()
+                    .add(const OnFetchReposEvent());
+              });
+            }
             if (state.dioErrorType! == DioExceptionType.connectionError) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const NoConnectionPage(),
                 ),
-              );
+              ).then((value) {
+                context
+                    .read<TrendingsRepositoryBloc>()
+                    .add(const OnFetchReposEvent());
+              });
             }
             return;
           }

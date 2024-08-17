@@ -6,6 +6,7 @@ class TrendingsRepositoryState extends Equatable {
   final SortType? sortType;
   final bool isFetching;
   final DioExceptionType? dioErrorType;
+  final String errorMessage;
 
   const TrendingsRepositoryState({
     required this.trendingsRepos,
@@ -13,14 +14,15 @@ class TrendingsRepositoryState extends Equatable {
     required this.sortType,
     this.isFetching = false,
     this.dioErrorType,
+    required this.errorMessage,
   });
 
   factory TrendingsRepositoryState.initial() {
     return const TrendingsRepositoryState(
-      trendingsRepos: [],
-      openDetailTile: [],
-      sortType: null,
-    );
+        trendingsRepos: [],
+        openDetailTile: [],
+        sortType: null,
+        errorMessage: '');
   }
 
   TrendingsRepositoryState copyWith({
@@ -29,6 +31,7 @@ class TrendingsRepositoryState extends Equatable {
     SortType? sortType,
     bool? isFetching,
     DioExceptionType? dioErrorType,
+    String? errorMessage,
   }) {
     return TrendingsRepositoryState(
       trendingsRepos: trendingsRepos ?? this.trendingsRepos,
@@ -36,12 +39,19 @@ class TrendingsRepositoryState extends Equatable {
       sortType: sortType ?? this.sortType,
       isFetching: isFetching ?? this.isFetching,
       dioErrorType: dioErrorType,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [trendingsRepos, openDetailTile, sortType, isFetching, dioErrorType];
+  List<Object?> get props => [
+        trendingsRepos,
+        openDetailTile,
+        sortType,
+        isFetching,
+        dioErrorType,
+        errorMessage
+      ];
 }
 
 enum SortType { star, name }

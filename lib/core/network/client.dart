@@ -25,7 +25,7 @@ class NetworkClient {
       error: true,
       compact: true,
       maxWidth: 90,
-      enabled: false,
+      enabled: true,
     ));
 
     return dio;

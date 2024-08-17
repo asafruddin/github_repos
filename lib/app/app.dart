@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:trending_list/presentation/pages/no_connection/no_connection_page.dart';
+import 'package:trending_list/presentation/pages/error_page/no_connection_page.dart';
 import 'package:trending_list/presentation/pages/trendings/trendings_page.dart';
 
 class App extends StatefulWidget {

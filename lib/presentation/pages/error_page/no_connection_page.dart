@@ -20,6 +20,10 @@ class NoConnectionPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium),
             Text('Your phone still looking for connection',
                 style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Refresh'))
           ],
         ),
       ),

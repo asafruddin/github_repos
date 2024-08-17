@@ -16,12 +16,16 @@ class TrendingsRepositoryBloc
   TrendingsRepositoryBloc(this.fetchRepositoriesUseCase)
       : super(TrendingsRepositoryState.initial()) {
     on<OnFetchReposEvent>((event, emit) async {
-      emit(state.copyWith(isFetching: true));
+      emit(state.copyWith(
+          isFetching: true, dioErrorType: null, errorMessage: ''));
       try {
         final res = await fetchRepositoriesUseCase.call("octokit");
         emit(state.copyWith(trendingsRepos: res, isFetching: false));
       } on DioException catch (e) {
-        emit(state.copyWith(dioErrorType: e.type, isFetching: false));
+        emit(state.copyWith(
+            dioErrorType: e.type,
+            isFetching: false,
+            errorMessage: e.response?.data['message']));
       } catch (e) {
         log('ERROR: $e');
         emit(state.copyWith(trendingsRepos: [], isFetching: false));
